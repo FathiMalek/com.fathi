@@ -7,40 +7,41 @@ import com.fathi.utilities.Node;
  * @author fathi
  */
 public class LinkedList<t> {
-    private Node head, tail;
-    private int size;
+    private Node head = null, tail = null;
+    private int size = 0;
     
     public LinkedList() {
         head = tail = null;
     }
     
     public LinkedList(LinkedList l) {
-        LinkedList bid = new LinkedList();
-        while(!bid.empty())
-            this.push_front((t) bid.pop_back());
-        bid = null;
+        while(!l.empty())
+            this.push_front((t) l.pop_back());
     }
-    
-    
+
+    public int getSize() {
+        return this.size;
+    }
+
     public boolean empty() {
         return head == null;
     }
-    
+
     public void clear() {
         while(head != null) {
             Node ptr = head;
-            head = head.next;
+            head = head.getNext();
             ptr = null;
         }
+        size = 0;
     }
-    
-    
+
     public void push_front(t data) {
         Node ptr = new Node(data);
         if(empty())
             head = tail = ptr;
         else {
-            ptr.next = head;
+            ptr.setNext(head);
             head = ptr;
         }
         size++;
@@ -51,7 +52,7 @@ public class LinkedList<t> {
         if(empty())
             head = tail = ptr;
         else {
-            tail.next = ptr;
+            tail.setNext(ptr);
             tail = ptr;
         }
         size++;
@@ -67,50 +68,49 @@ public class LinkedList<t> {
             Node ptr = this.head, prc = this.head;
             for(int i = 0; i < pos; i++) {
                 prc = ptr;
-                ptr = ptr.next;
+                ptr = ptr.getNext();
             }
-            prc.next = node;
-            node.next = ptr;
+            prc.setNext(node);
+            node.setNext(ptr);
             size++;
         }
     }
     
-    
     public t pop_front() {
         try {
-            t data = (t) head.data;
+            t data = (t) head.getData();
             if(head == tail)
                 head = null;
             else {
                 Node ptr = head;
-                head = head.next;
+                head = head.getNext();
                 ptr = null;
             }
             size--;
             return data;
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
     
     public t pop_back() {
         try {
-            t data = (t) tail.data;
+            t data = (t) tail.getData();
             if(head == tail)
                 head = null;
             else {
                 Node tmp = head;
-                while(tmp.next != tail)
-                    tmp = tmp.next;
-                tmp.next = null;
+                while(tmp.getNext() != tail)
+                    tmp = tmp.getNext();
+                tmp.setNext(null);
                 Node ptr = tail;
                 ptr = null;
             }
             size--;
             return data;
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
@@ -125,16 +125,16 @@ public class LinkedList<t> {
                 Node ptr = head, prc = head;
                 for(int i = 0; i < pos; i++) {
                     prc = ptr;
-                    ptr = ptr.next;
+                    ptr = ptr.getNext();
                 }
-                t data = (t) ptr.data;
-                prc.next = ptr.next;
+                t data = (t) ptr.getData();
+                prc.setNext(ptr.getNext());
                 ptr = null;
                 size--;
                 return data;
             }
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
@@ -147,30 +147,23 @@ public class LinkedList<t> {
 //        
 //    }
     
-    
     public t front() {
         try {
-            return (t) head.data;
-        } catch(Exception e) {
-            e.printStackTrace();
+            return (t) head.getData();
+        } catch(Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
     
     public t back() {
         try {
-            return (t) tail.data;
-        } catch(Exception e) {
-            e.printStackTrace();
+            return (t) tail.getData();
+        } catch(Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
-    
-    
-    public int size() {
-        return this.size;
-    }
-    
     
     public void reverse() {
         LinkedList l = new LinkedList();
@@ -178,19 +171,5 @@ public class LinkedList<t> {
             l.push_front(this.pop_front());
         while(!l.empty())
             this.push_back((t) l.pop_front());
-    }
-    
-    
-    public void display() {
-        if(!empty()) {
-            Node tmp = head;
-            while(tmp != null) {
-                System.out.print(tmp.data);
-                if (tmp.next != null)
-                    System.out.print(" -> ");
-                tmp = tmp.next;
-            }
-            tmp = null;
-        }
     }
 }
