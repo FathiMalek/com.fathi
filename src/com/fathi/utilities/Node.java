@@ -34,8 +34,4 @@ public class Node<t> {
     public void setNext(Node next) {
         this.next = next;
     }
-
-    public static void cain () {
-        return;
-    }
 }
