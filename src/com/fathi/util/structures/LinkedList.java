@@ -2,6 +2,8 @@ package com.fathi.util.structures;
 
 import com.fathi.utilities.Node;
 
+import java.util.Objects;
+
 /**
  *
  * @author fathi
@@ -24,8 +26,28 @@ public class LinkedList<t> {
         ptr = null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Queue)) return false;
+        Node ptr = this.head, ep = ((LinkedList) o).head;
+        while(ptr != null && ep != null) {
+            if(ptr.getData() != ep.getData())
+                return false;
+            ptr = ptr.getNext();
+            ep = ep.getNext();
+        }
+        if(ptr != null || ep != null)
+            return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFront(), getBack(), getSize());
+    }
+
     /**
-     *
      * get the size of the data structure
      * @return Integer value represent the current size of the data structure
      */
@@ -34,7 +56,6 @@ public class LinkedList<t> {
     }
 
     /**
-     *
      * Know whether the data structure is empty or not
      * @return Boolean value that specifies whether the data structure is empty or not
      */
@@ -43,7 +64,6 @@ public class LinkedList<t> {
     }
 
     /**
-     *
      * Clear the data structure to be without any data but its still exist in the memory
      */
     public void clear() {
@@ -163,7 +183,6 @@ public class LinkedList<t> {
 //    }
 
     /**
-     *
      * return the data of the first element of the data structure (here return the data of the head of the linked list)
      * @return the data of the first element in the data structure
      */
@@ -177,7 +196,6 @@ public class LinkedList<t> {
     }
 
     /**
-     *
      * return the data of the last element of the data structure (here return the data of the tail of the linked list)
      * @return the data of the last element in the data structure
      */
@@ -191,7 +209,6 @@ public class LinkedList<t> {
     }
 
     /**
-     *
      * Reverse the data structure, so the first element will be the last and the last will be the first and so on
      */
     public void reverse() {

@@ -31,8 +31,7 @@ public class DB {
     }
     
     /**
-     * 
-     * setup your connection and return it so you must define your Connection from "java.sql.Connection" and assign to it.
+     * Setup your connection and return it so you must define your Connection from "java.sql.Connection" and assign to it.
      * @param db_name: the name of the database you want to connect to
      * @param user_name: server user name
      * @param user_password: server user password
