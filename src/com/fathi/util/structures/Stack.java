@@ -5,66 +5,109 @@ import com.fathi.utilities.Node;
 /**
  *
  * @author fathi
+ * @version 0.1.2
  */
 public class Stack<t> {
     private Node top = null;
     private int size = 0;
 
     public Stack () {
-        top = null;
+        this.top = null;
     }
 
     public Stack (Stack s) {
-        Stack bid = new Stack();
-        while (!s.empty())
-            bid.push((t) s.pop());
-        while (!bid.empty())
-            this.push((t) bid.pop());
-        bid = null;
-    }
-
-    public int getSize () { return this.size; }
-    
-    public boolean empty () {
-        return top == null;
-    }
-
-    public void clear () {
-        while(top != null) {
-            Node ptr = top;
-            top = top.getNext();
-            ptr = null;
+        Node ptr = s.top;
+        while(ptr != null) {
+            this.push((t) ptr.getData());
+            ptr = ptr.getNext();
         }
-        size = 0;
+        ptr = null;
+    }
+
+    /**
+     *
+     * get the size of the data structure
+     * @return Integer value represent the current size of the data structure
+     */
+    public int getSize () {
+        return this.size;
+    }
+
+    /**
+     *
+     * Know whether the data structure is empty or not
+     * @return Boolean value that specifies whether the data structure is empty or not
+     */
+    public boolean empty () {
+        return this.top == null;
+    }
+
+    /**
+     *
+     * Clear the data structure to be without any data but its still exist in the memory
+     */
+    public void clear () {
+        while(!this.empty()) {
+            this.pop();
+        }
     }
     
     public void push (t data) {
         Node node = new Node(data);
         if (empty())
-            top = node;
+            this.top = node;
         else {
-            node.setNext(top);
-            top = node;
+            node.setNext(this.top);
+            this.top = node;
         }
-        size++;
+        this.size++;
     }
 
     public t pop () {
         try {
-            t data = (t) top.getData();
-            if (size == 1)
-                top = null;
+            t data = (t) this.top.getData();
+            if (this.size == 1)
+                this.top = null;
             else {
-                Node ptr = top;
-                top = top.getNext();
+                Node ptr = this.top;
+                this.top = this.top.getNext();
                 ptr = null;
             }
-            size--;
+            this.size--;
             return data;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     *
+     * return the data of the first element of the data structure (here return the data of the top of the stack)
+     * @return the data of the first element in the data structure
+     */
+    public t getTop() {
+        try {
+            return (t) this.top;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     *
+     * Reverse the data structure, so the first element will be the last and the last will be the first and so on
+     */
+    public void reverse() {
+        Stack s1 = new Stack(), s2 = new Stack();
+        while(!this.empty())
+            s1.push(this.pop());
+        while(!s1.empty())
+            s2.push(this.pop());
+        while(!s2.empty())
+            this.push((t) s2.pop());
+        s1 = s2 = null;
     }
     
 }

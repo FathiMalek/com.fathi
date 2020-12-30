@@ -11,7 +11,7 @@ import java.util.Hashtable;
  * 
  * Data Base Management Class for you to control your data bases with few lines of code
  * @author fathi
- * @version 0.1.1.2
+ * @version 0.1.2
  */
 public class DB {
     
@@ -20,6 +20,7 @@ public class DB {
     private static String user_password;
     
     private static void execute(String query) {
+        // try to connect to the database and execute the given query
         Connection con = getConnection(db_name, user_name, user_password);
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -41,7 +42,9 @@ public class DB {
         DB.db_name = db_name;
         DB.user_name = user_name;
         DB.user_password =user_password;
+        // string to store the connection information
         String connection = "jdbc:mysql://localhost:3306/" + db_name + "?serverTimezone=UTC&user=" + user_name + "&password=" + user_password;
+        // try to connect to the database with the given information
         try {
             Connection con = DriverManager.getConnection(connection);
             return con;
@@ -57,7 +60,9 @@ public class DB {
      * @return ResultSet (from "java.sql.ResultSet")
      */
     public static ResultSet getData(String table) {
+        // string to store the query
         String query = "SELECT * FROM " + table;
+        // try to connect to the database and execute the query
         Connection con = getConnection(db_name, user_name, user_password);
         try {
             return con.createStatement().executeQuery(query);
@@ -74,7 +79,9 @@ public class DB {
      * @return ResultSet (from "java.sql.ResultSet")
      */
     public static ResultSet getData(String table, String fields) {
+        // string to store the query
         String query = "SELECT " + fields + " FROM " + table;
+        // try to connect to the database and execute the query
         Connection con = getConnection(db_name, user_name, user_password);
         try {
             return con.createStatement().executeQuery(query);
@@ -92,7 +99,9 @@ public class DB {
      * @return ResultSet (from "java.sql.ResultSet")
      */
     public static ResultSet getData(String table, String fields, String condition) {
+        // string to store the query
         String query = "SELECT " + fields + " FROM " + table + " WHERE " + condition;
+        // try to connect to the database and execute the query
         Connection con = getConnection(db_name, user_name, user_password);
         try {
             return con.createStatement().executeQuery(query);
@@ -108,15 +117,18 @@ public class DB {
      * @param fields: the values to be inserted
      */
     public static void insert(String table, Hashtable fields) {
+        // variables to store the fields
         int index = 0;
         String input1 = "";
         String input2 = "";
         String[] str = new String[fields.size()];
         Enumeration keys = fields.keys();
+        // store the fields in strings one by one
         while(keys.hasMoreElements()) {
             str[index] = (String) keys.nextElement();
             index++;
         }
+        // create the body of the query
         for(int i = 0; i < index-1; i++) {
             input1 += str[i] + ", ";
             input2 += "'" + fields.get(str[i]) + "', ";
@@ -124,6 +136,7 @@ public class DB {
         input1 += str[index-1];
         input2 += "'" + fields.get(str[index-1]) + "'";
         String query = "INSERT INTO " + table + " (" + input1 + ") VALUES (" + input2 + ")";
+        // execute the query
         execute(query);
     }
     
@@ -134,7 +147,9 @@ public class DB {
      * @param condition: the condition of the query
      */
     public static void update(String table, String values, String condition) {
+        // string to store the query
         String query = "UPDATE " + table + " SET " + values + " WHERE " + condition;
+        // execute the query
         execute(query);
     }
     
@@ -144,7 +159,9 @@ public class DB {
      * @param condition: the condition of the query
      */
     public static void delete(String table, String condition) {
+        // string to store the query
         String  query = "DELETE FROM " + table + " WHERE " + condition;
+        // execute the query
         execute(query);
     }
 }

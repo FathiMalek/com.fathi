@@ -10,10 +10,12 @@ public class Node<t> {
     private Node next = null;
 
     public Node (){}
+
     public Node (t data){
         this.data = data;
         this.next = null;
     }
+
     public Node (t data, Node next){
         this.data = data;
         this.next = next;

@@ -5,57 +5,72 @@ import com.fathi.utilities.Node;
 /**
  *
  * @author fathi
+ * @version 0.1.2
  */
 public class LinkedList<t> {
     private Node head = null, tail = null;
     private int size = 0;
     
     public LinkedList() {
-        head = tail = null;
+        this.head = this.tail = null;
     }
     
     public LinkedList(LinkedList l) {
-        while(!l.empty())
-            this.push_front((t) l.pop_back());
+        Node ptr = l.head;
+        while(ptr != null) {
+            this.push_front((t) ptr.getData());
+            ptr = ptr.getNext();
+        }
+        ptr = null;
     }
 
+    /**
+     *
+     * get the size of the data structure
+     * @return Integer value represent the current size of the data structure
+     */
     public int getSize() {
         return this.size;
     }
 
+    /**
+     *
+     * Know whether the data structure is empty or not
+     * @return Boolean value that specifies whether the data structure is empty or not
+     */
     public boolean empty() {
-        return head == null;
+        return this.head == null;
     }
 
+    /**
+     *
+     * Clear the data structure to be without any data but its still exist in the memory
+     */
     public void clear() {
-        while(head != null) {
-            Node ptr = head;
-            head = head.getNext();
-            ptr = null;
-        }
-        size = 0;
+        while(!this.empty())
+            this.pop_front();
     }
 
     public void push_front(t data) {
         Node ptr = new Node(data);
         if(empty())
-            head = tail = ptr;
+            this.head = this.tail = ptr;
         else {
-            ptr.setNext(head);
-            head = ptr;
+            ptr.setNext(this.head);
+            this.head = ptr;
         }
-        size++;
+        this.size++;
     }
     
     public void push_back(t data) {
         Node ptr = new Node(data);
         if(empty())
-            head = tail = ptr;
+            this.head = this.tail = ptr;
         else {
-            tail.setNext(ptr);
-            tail = ptr;
+            this.tail.setNext(ptr);
+            this.tail = ptr;
         }
-        size++;
+        this.size++;
     }
     
     public void insert(int pos, t data) {
@@ -72,21 +87,21 @@ public class LinkedList<t> {
             }
             prc.setNext(node);
             node.setNext(ptr);
-            size++;
+            this.size++;
         }
     }
     
     public t pop_front() {
         try {
-            t data = (t) head.getData();
-            if(head == tail)
-                head = null;
+            t data = (t) this.head.getData();
+            if(this.head == this.tail)
+                this.head = null;
             else {
-                Node ptr = head;
-                head = head.getNext();
+                Node ptr = this.head;
+                this.head = this.head.getNext();
                 ptr = null;
             }
-            size--;
+            this.size--;
             return data;
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -96,18 +111,18 @@ public class LinkedList<t> {
     
     public t pop_back() {
         try {
-            t data = (t) tail.getData();
-            if(head == tail)
-                head = null;
+            t data = (t) this.tail.getData();
+            if(this.head == this.tail)
+                this.head = null;
             else {
-                Node tmp = head;
-                while(tmp.getNext() != tail)
+                Node tmp = this.head;
+                while(tmp.getNext() != this.tail)
                     tmp = tmp.getNext();
                 tmp.setNext(null);
-                Node ptr = tail;
+                Node ptr = this.tail;
                 ptr = null;
             }
-            size--;
+            this.size--;
             return data;
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -122,7 +137,7 @@ public class LinkedList<t> {
             } else if(pos == -1) {
                 return pop_back();
             } else {
-                Node ptr = head, prc = head;
+                Node ptr = this.head, prc = this.head;
                 for(int i = 0; i < pos; i++) {
                     prc = ptr;
                     ptr = ptr.getNext();
@@ -130,7 +145,7 @@ public class LinkedList<t> {
                 t data = (t) ptr.getData();
                 prc.setNext(ptr.getNext());
                 ptr = null;
-                size--;
+                this.size--;
                 return data;
             }
         } catch(Exception ex) {
@@ -138,33 +153,47 @@ public class LinkedList<t> {
             return null;
         }
     }
-    
+
 //    public void delete(t data) {
-//        
+//
 //    }
-//    
+//
 //    public void delete(t data, int num) {
-//        
+//
 //    }
-    
-    public t front() {
+
+    /**
+     *
+     * return the data of the first element of the data structure (here return the data of the head of the linked list)
+     * @return the data of the first element in the data structure
+     */
+    public t getFront() {
         try {
-            return (t) head.getData();
+            return (t) this.head.getData();
         } catch(Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
-    
-    public t back() {
+
+    /**
+     *
+     * return the data of the last element of the data structure (here return the data of the tail of the linked list)
+     * @return the data of the last element in the data structure
+     */
+    public t getBack() {
         try {
-            return (t) tail.getData();
+            return (t) this.tail.getData();
         } catch(Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
-    
+
+    /**
+     *
+     * Reverse the data structure, so the first element will be the last and the last will be the first and so on
+     */
     public void reverse() {
         LinkedList l = new LinkedList();
         while(!this.empty())
