@@ -1,13 +1,13 @@
 package com.fathi.util.structures;
 
 import com.fathi.utilities.Node;
-
 import java.util.Objects;
 
 /**
  *
  * @author fathi
  * @version 0.1.2
+ * @param <t> [optional] a specific type for the DS
  */
 public class LinkedList<t> {
     private Node head = null, tail = null;
@@ -71,6 +71,10 @@ public class LinkedList<t> {
             this.pop_front();
     }
 
+    /**
+     * add an element for the list from the front
+     * @param data the data to be added to the list
+     */
     public void push_front(t data) {
         Node ptr = new Node(data);
         if(empty())
@@ -82,6 +86,10 @@ public class LinkedList<t> {
         this.size++;
     }
     
+    /**
+     * add an element for the list from the back
+     * @param data the data to be added to the list
+     */
     public void push_back(t data) {
         Node ptr = new Node(data);
         if(empty())
@@ -93,6 +101,11 @@ public class LinkedList<t> {
         this.size++;
     }
     
+    /**
+     * add an element in a specific position to the list
+     * @param pos the position to add the item in
+     * @param data the data to be added to the list
+     */
     public void insert(int pos, t data) {
         if(pos == 0 || this.empty()) {
             this.push_front(data);
@@ -111,6 +124,10 @@ public class LinkedList<t> {
         }
     }
     
+    /**
+     * remove the first element from the front of the list and return its value
+     * @return the value of the first element in the stack
+     */
     public t pop_front() {
         try {
             t data = (t) this.head.getData();
@@ -129,6 +146,10 @@ public class LinkedList<t> {
         }
     }
     
+    /**
+     * remove the first element from the back of the list and return its value
+     * @return the value of the first element in the stack
+     */
     public t pop_back() {
         try {
             t data = (t) this.tail.getData();
@@ -150,6 +171,11 @@ public class LinkedList<t> {
         }
     }
     
+    /**
+     * remove an element form a specific position in the list and return its value
+     * @param pos the position to removed from (0 for the first place and -1 for the last place)
+     * @return the value of the removed item
+     */
     public t remove(int pos) {
         try {
             if(pos == 0) {
@@ -173,14 +199,6 @@ public class LinkedList<t> {
             return null;
         }
     }
-
-//    public void delete(t data) {
-//
-//    }
-//
-//    public void delete(t data, int num) {
-//
-//    }
 
     /**
      * return the data of the first element of the data structure (here return the data of the head of the linked list)

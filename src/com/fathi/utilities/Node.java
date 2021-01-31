@@ -4,6 +4,7 @@ package com.fathi.utilities;
  *
  * @author fathi
  * @version 0.1.2
+ * @param <t> [optional] a specific type for the DS
  */
 public class Node<t> {
     private t data;

@@ -1,13 +1,13 @@
 package com.fathi.util.structures;
 
 import com.fathi.utilities.Node;
-
 import java.util.Objects;
 
 /**
  *
  * @author fathi
  * @version 0.1.2
+ * @param <t> [optional] a specific type for the DS
  */
 public class Stack<t> {
     private Node top = null;
@@ -72,6 +72,10 @@ public class Stack<t> {
         }
     }
     
+    /**
+     * add an element for the stack from the top
+     * @param data the data to be added in the stack
+     */
     public void push (t data) {
         Node node = new Node(data);
         if (empty())
@@ -82,7 +86,11 @@ public class Stack<t> {
         }
         this.size++;
     }
-
+    
+    /**
+     * remove the first element from the stack and return its value
+     * @return the value of the first element in the stack
+     */
     public t pop () {
         try {
             t data = (t) this.top.getData();

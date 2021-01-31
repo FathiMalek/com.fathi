@@ -1,13 +1,13 @@
 package com.fathi.util.structures;
 
 import com.fathi.utilities.Node;
-
 import java.util.Objects;
 
 /**
  *
  * @author fathi
  * @version 0.1.2
+ * @param <t> [optional] a specific type for the DS
  * */
 public class Queue<t> {
     private Node front, back;
@@ -70,7 +70,11 @@ public class Queue<t> {
         while(!empty())
             this.dequeue();
     }
-
+    
+    /**
+     * Add a new element to the queue from the back
+     * @param data the data to be added to the queue
+     */
     public void enqueue(t data) {
         Node node = new Node(data);
         if (empty())
@@ -80,7 +84,11 @@ public class Queue<t> {
         this.back = node;
         this.size++;
     }
-
+    
+    /**
+     * remove the first element of the queue and get its value
+     * @return the value of the first element
+     */
     public t dequeue() {
         try {
             t data = (t) this.front.getData();
